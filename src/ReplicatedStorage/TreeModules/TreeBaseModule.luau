@@ -36,6 +36,28 @@ function Tree.SplitLog(part, hitPosition)
 	bottomPart:SetAttribute("Health", 100)
 	bottomPart.Parent = workspace.Trees
 
+	-- -- Before destroying the original part, reparent any branches
+	local function DetachBranchesFrom(part)
+		local branchFolder = part:FindFirstChild("BranchParts")
+		if not branchFolder then
+			return
+		end
+
+		for _, branch in ipairs(branchFolder:GetChildren()) do
+			branch.Anchored = false
+			branch:SetAttribute("Detached", true) -- Optional flag for future logic
+			local weld = branch:FindFirstChild("ParentPart")
+			if weld then
+				weld:Destroy()
+			end
+			branch.Parent = workspace.Trees
+		end
+
+		branchFolder:Destroy()
+	end
+
+	DetachBranchesFrom(part)
+
 	part:Destroy()
 end
 

@@ -1,7 +1,7 @@
 local AxeBase = require(script.Parent.AxeBaseModule)
 
 local IronAxe = {}
-IronAxe.Damage = 10
+IronAxe.Damage = 50
 IronAxe.Name = "Iron Axe"
 
 function IronAxe.OnHit(part, hitPosition, player)
